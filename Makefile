@@ -22,6 +22,9 @@ OBJS = $(subst source/, $(BUILD_DIR)/source/, $(addsuffix .o, $(basename $(SRCS)
 compile: $(BUILD_DIR)/game
 	@echo Compilation finished!
 
+run: compile
+	@$(BUILD_DIR)/game
+
 $(BUILD_DIR)/game: $(OBJS)
 	@$(CXX) -o $@ $(OBJS)
 
