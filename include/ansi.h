@@ -34,20 +34,20 @@
 #define ANSI_ENABLE(ANSI_MODE) ANSI_CMD(ANSI_CSI ANSI_MODE ANSI_MODE_ENABLE)
 #define ANSI_DISABLE(ANSI_MODE) ANSI_CMD(ANSI_CSI ANSI_MODE ANSI_MODE_DISABLE)
 
-inline void ansi_cursor_up(int x) { // CUU
+inline static void ansi_cursor_up(int x) { // CUU
   ANSI_CMD(ANSI_CSI "%dA", x);
 }
-inline void ansi_cursor_dw(int x) { // CUD
+inline static void ansi_cursor_dw(int x) { // CUD
   ANSI_CMD(ANSI_CSI "%dB", x);
 }
-inline void ansi_cursor_fw(int x) { // CUF
+inline static void ansi_cursor_fw(int x) { // CUF
   ANSI_CMD(ANSI_CSI "%dC", x);
 }
-inline void ansi_cursor_bw(int x) { // CUB
+inline static void ansi_cursor_bw(int x) { // CUB
   ANSI_CMD(ANSI_CSI "%dD", x);
 }
 
-inline void ansi_cursor_set(int row, int col) {
+inline static void ansi_cursor_set(int row, int col) {
   ANSI_CMD(ANSI_CSI "%d;%dH", row, col);
 }
 

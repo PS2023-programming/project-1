@@ -25,7 +25,7 @@ run: compile
 	@$(BUILD_DIR)/game 2>$(BUILD_DIR)/game.log
 
 $(BUILD_DIR)/shell:  wrapper/shell.c
-	@gcc -o $(BUILD_DIR)/shell wrapper/shell.c
+	@gcc -Iinclude -o $(BUILD_DIR)/shell wrapper/shell.c
 
 shell: $(BUILD_DIR)/shell
 	@$(BUILD_DIR)/shell
