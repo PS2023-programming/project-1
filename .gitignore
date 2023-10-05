@@ -7,3 +7,6 @@
 !*.c
 !*.cpp
 !*.md
+!dev
+!test
+!wrapper
