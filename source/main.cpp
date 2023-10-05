@@ -4,6 +4,10 @@
 
 int main() {
 
+#ifdef _WIN32
+  freopen("build/game.log", "w", stderr);
+#endif
+
   tui_init();
 
   while (true) {

@@ -16,9 +16,9 @@ extern int log_level;
   Log(5, ANSI_RED, fmt, ## __VA_ARGS__); \
   exit(-1); \
 } while(0)
- 
-#define Info(fmt, ...) Log(3, ANSI_RST, fmt, ## __VA_ARGS__)
-#define Debug(fmt, ...) Log(2, ANSI_RST, fmt, ## __VA_ARGS__)
-#define Warn(fmt, ...) Log(4, ANSI_RST, fmt, ## __VA_ARGS__)
+
+#define Info(fmt, ...) Log(3, ANSI_BLUE, fmt, ## __VA_ARGS__)
+#define Debug(fmt, ...) Log(2, ANSI_BLUE, fmt, ## __VA_ARGS__)
+#define Warn(fmt, ...) Log(4, ANSI_BLUE, fmt, ## __VA_ARGS__)
 
 #endif
