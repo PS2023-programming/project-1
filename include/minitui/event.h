@@ -8,6 +8,11 @@
 #define MOUSE_RIGHT_CLICK 2 
 #define MOUSE_MOVE 35
 
+#define KEYBD_EVENT 0
+#define MOUSE_EVENT 1
+#define EXIT_EVENT 127
+#define PASTE_EVENT 22
+
 struct tui_event {
   int event_type;
   void *event_body;
@@ -19,9 +24,17 @@ struct tui_mouse_event {
   bool ispress;
 };
 
-// #define F1
+struct tui_paste_event {
+  char *str;
+};
+
 struct tui_kbd_event {
   char code;
+};
+
+struct tui_exit_event {
+  int retcode;
+  void *invoker;
 };
 
 #ifndef __cplusplus

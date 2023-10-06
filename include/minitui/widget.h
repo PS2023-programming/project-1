@@ -14,7 +14,11 @@ struct tui_widget {
   void set_updated() {updated = true;};
   bool get_updated() const {return updated;}
   
+  tui_widget *parent;
+  std::vector<tui_widget *> children;
+
   virtual tui_event *on_event(tui_event *event) = 0;
+  virtual void draw(tui_point point) const = 0;
 };
 
 #endif

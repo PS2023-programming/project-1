@@ -3,7 +3,7 @@ BUILD_DIR = $(WORK_DIR)/build
 
 $(shell mkdir -p $(BUILD_DIR))
 
-INC_PATH = $(realpath include)
+INC_PATH = $(realpath include) $(realpath dev/include)
 INC_FLAG = $(addprefix -I, $(INC_PATH))
 
 COMMON_FLAGS = -O2 -MMD -Wall -Wextra $(INC_FLAG)
@@ -14,6 +14,8 @@ CC = gcc
 CXX = g++
 AS = as
 LD = ld
+
+
 
 SRCS = $(shell find source -name *.cpp) $(shell find source -name *.c)
 OBJS = $(subst source/, $(BUILD_DIR)/source/, $(addsuffix .o, $(basename $(SRCS))))
