@@ -13,7 +13,7 @@ tui_msgbox::on_event(
   if (!event) {
     Warn("A NULL event given!");
   }
-  if (event->event_type == KEYBD_EVENT) {
+  if (event->event_type == TUI_KEYBD_EVENT) {
     if (event->event_body) {
       Warn("An empty event given!");
     }
@@ -27,7 +27,7 @@ tui_msgbox::on_event(
       exit_event->retcode = code;
       if (event->event_body)
         free(event->event_body);
-      event->event_type = EXIT_EVENT;
+      event->event_type = TUI_EXIT_EVENT;
       event->event_body = exit_event;
       return event;
     }

@@ -37,6 +37,7 @@ tui_event *tui_get_event() {
   default:
     break;
   }
+  return NULL;
 }
 
 int tui_exec() {
@@ -45,12 +46,12 @@ int tui_exec() {
     if (!event) {
       Error("A NULL event returned!");
     }
-    if (event->event_type == MOUSE_EVENT && !mouse_enabled) continue;
+    if (event->event_type == TUI_MOUSE_EVENT && !mouse_enabled) continue;
 
     tui_widget *current = focus;
 
     // find the mouse's target
-    if (event->event_type == MOUSE_EVENT) {
+    if (event->event_type == TUI_MOUSE_EVENT) {
       auto mouse_event = (tui_mouse_event *) event->event_body;
       tui_point mouse_point = (tui_point) {
         .x = mouse_event->x,
@@ -74,7 +75,7 @@ int tui_exec() {
       current = current->parent;
     }
 
-    if (event && event->event_type == EXIT_EVENT) {
+    if (event && event->event_type == TUI_EXIT_EVENT) {
       auto exit_event = (tui_exit_event *) event->event_body;
       return exit_event->retcode;
     }

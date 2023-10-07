@@ -3,7 +3,7 @@ BUILD_DIR = $(WORK_DIR)/build
 
 $(shell mkdir -p $(BUILD_DIR))
 
-INC_PATH = $(realpath include) $(realpath dev/include)
+INC_PATH = $(realpath minitui/include) $(realpath game/include)
 INC_FLAG = $(addprefix -I, $(INC_PATH))
 
 COMMON_FLAGS = -O2 -MMD -Wall -Wextra $(INC_FLAG)
@@ -15,10 +15,8 @@ CXX = g++
 AS = as
 LD = ld
 
-
-
-SRCS = $(shell find source -name *.cpp) $(shell find source -name *.c)
-OBJS = $(subst source/, $(BUILD_DIR)/source/, $(addsuffix .o, $(basename $(SRCS))))
+SRCS = $(shell find minitui/source -name *.cpp) $(shell find minitui/source -name *.c) $(shell find game/source -name *.c) $(shell find game/source -name *.cpp)
+OBJS = $(addprefix $(BUILD_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
 
 compile: $(BUILD_DIR)/game
 	@echo Compilation finished!
@@ -45,7 +43,7 @@ $(BUILD_DIR)/%.o : %.c
 	@$(CC) -std=gnu11 -c -o $@ $(CFLAGS) $(realpath $<)
 	@sed -i 's/C:\/msys64//g' $(patsubst %.o, %.d, $@)
 
--include $(subst source/, $(BUILD_DIR)/source/, $(addsuffix .d, $(basename $(SRCS))))
+-include $(addprefix $(BUILD_DIR)/, $(addsuffix .d, $(basename $(SRCS))))
 
 clean:
 	-@rm -rf build

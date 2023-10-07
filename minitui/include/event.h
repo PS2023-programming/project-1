@@ -8,10 +8,10 @@
 #define MOUSE_RIGHT_CLICK 2 
 #define MOUSE_MOVE 35
 
-#define KEYBD_EVENT 0
-#define MOUSE_EVENT 1
-#define EXIT_EVENT 127
-#define PASTE_EVENT 22
+#define TUI_KEYBD_EVENT 0
+#define TUI_MOUSE_EVENT 1
+#define TUI_EXIT_EVENT 127
+#define TUI_PASTE_EVENT 22
 
 struct tui_event {
   int event_type;
