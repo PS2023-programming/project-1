@@ -3,7 +3,13 @@
 !Makefile
 !source
 !include
+!resources
 !*.h
 !*.c
 !*.cpp
 !*.md
+!dev
+!test
+!wrapper
+!game
+!minitui
