@@ -7,6 +7,8 @@
 #include <cassert>
 #include <cstdlib>
 #include <cstdint>
+#include <cstring>
+#include <cctype>
 #include <queue>
 #include <vector>
 #include <algorithm>
@@ -25,6 +27,8 @@
 #ifdef _WIN64
 #include <windows.h>
 #include <conio.h>
+#else
+#include <termios.h>
 #endif
 
 #endif

@@ -73,7 +73,9 @@ tui_get_ansi_event() {
 
 tui_event *
 tui_get_event() {
+#ifdef _WIN64
   int is_kbd = _kbhit();
+#endif
   char ch = tui_getchar();
   switch (ch)
   {
@@ -158,7 +160,7 @@ tui_exec() {
     while (current && event) {
       event = current->on_event(event);
       tui_widget *next = current->parent;
-      if (event->event_type == TUI_EXIT_EVENT) {
+      if (event && event->event_type == TUI_EXIT_EVENT) {
         tui_erase_widget(current);
         delete current;
       }

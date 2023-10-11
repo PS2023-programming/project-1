@@ -37,6 +37,28 @@ tui_init() {
     }
     // printf("\033=");
     Info("Enable virtual terminal input success.");
+  #else
+    Info("We are in Linux, doing some necessary initiation");
+  
+    ANSI_ENABLE(ANSI_MOUSE);
+    ANSI_ENABLE(ANSI_SGR);
+    ANSI_ENABLE(ANSI_ANY_EVENT);
+
+    termios termios_0;
+    memset(&termios_0, 0, sizeof(termios));
+    tcgetattr(1, &termios_0);
+    
+    termios_0.c_iflag &= ~(IGNBRK | BRKINT | PARMRK | ISTRIP | INLCR | IGNCR | ICRNL | IXON);
+    // termios_0.c_oflag &= ~OPOST;
+    termios_0.c_lflag &= ~(ECHO | ECHONL | ICANON | ISIG | IEXTEN);
+    termios_0.c_cflag &= ~(CSIZE | PARENB);
+    termios_0.c_cflag |= CS8;
+
+    if (tcsetattr(1, TCSANOW, &termios_0) == 0) 
+      Info("Initiation Finished!");
+    else
+      Error("Termios set failed!");
+
   #endif
 
   // enable paste mode
