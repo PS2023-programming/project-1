@@ -6,6 +6,15 @@ char buf[32768];
 void 
 tui_init() {
   freopen("build/game.log", "w", stderr);
+  
+  #ifdef _WIN64
+    int pid = GetCurrentProcessId();
+  #else
+    int pid = getpid();
+  #endif
+  FILE * file = fopen("build/pid.info", "w");
+  fprintf(file, "%d\n", pid);
+  fclose(file);
 
   setvbuf(stdin, NULL, _IONBF, 0);
   setvbuf(stdout, buf, _IOFBF, 32768);

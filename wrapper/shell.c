@@ -7,6 +7,7 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+
 static int cmd_help(char** argv, int argc);
 
 static int cmd_log(char** argv, int argc) {
@@ -16,6 +17,27 @@ static int cmd_log(char** argv, int argc) {
   system("cat build/game.log");
 #endif
   ANSI_CMD(ANSI_RST);
+  return 0;
+}
+
+static int cmd_debug(char** argv, int argc) {
+
+#ifdef _WIN64
+  FILE *file = fopen("build\\pid.info", "r");
+#else
+  FILE *file = fopen("build/pid.info", "r");
+#endif
+
+  if (!file) {
+    puts("The program seems not to be running...");
+  } else {
+    int pid;
+    fscanf(file, "%d", &pid);
+    fclose(file);
+    char cmd[2048];
+    sprintf(cmd, "gdb -p %d", pid);
+    system(cmd);
+  }
 }
 
 static int cmd_game(char** argv, int argc) {
@@ -38,6 +60,7 @@ static int cmd_game(char** argv, int argc) {
   system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico");
 
 #endif
+  return 0;
 
 }
 
@@ -49,6 +72,7 @@ static struct {
   { "help", "Display information about all supported commands", cmd_help },
   { "game", "Activate the game", cmd_game},
   { "log",  "Display log information", cmd_log},
+  { "debug", "Debug the program", cmd_debug},
 };
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 #define CNT_CMD ARRLEN(cmd_table)
