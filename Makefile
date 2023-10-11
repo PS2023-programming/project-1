@@ -9,7 +9,7 @@ STAGE = test/phase1
 INC_PATH = $(realpath minitui/include) $(realpath $(STAGE)/include)
 INC_FLAG = $(addprefix -I, $(INC_PATH))
 
-COMMON_FLAGS = -O2 -MMD -Wall -Wno-unused-variable -Wno-unused-but-set-variable -Wno-unused-parameter -Wextra $(INC_FLAG)
+COMMON_FLAGS = -O2 -MMD -Wall -Wno-unused-variable -Wno-unused-result -Wno-unused-but-set-variable -Wno-unused-parameter -Wextra $(INC_FLAG)
 CFLAGS = $(COMMON_FLAGS)
 CXXFLAGS = $(COMMON_FLAGS)
 
@@ -29,11 +29,11 @@ OBJS += $(addprefix $(BUILD_DIR)/, $(patsubst %.rc, %.o, $(RESS)))
 
 endif
 
-compile: $(BUILD_DIR)/game
+compile: $(BUILD_DIR)/nju_universalis
 	@echo Compilation finished!
 
 run: compile
-	@$(BUILD_DIR)/game 2>$(BUILD_DIR)/game.log
+	@$(BUILD_DIR)/nju_universalis 2>$(BUILD_DIR)/game.log
 
 $(BUILD_DIR)/shell:  wrapper/shell.c
 	@gcc -Iminitui/include -o $(BUILD_DIR)/shell wrapper/shell.c
@@ -41,7 +41,7 @@ $(BUILD_DIR)/shell:  wrapper/shell.c
 shell: $(BUILD_DIR)/shell
 	@$(BUILD_DIR)/shell
 
-$(BUILD_DIR)/game: $(OBJS)
+$(BUILD_DIR)/nju_universalis: $(OBJS)
 	@$(CXX) -o $@ $(OBJS)
 
 $(BUILD_DIR)/%.o : %.cpp

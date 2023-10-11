@@ -10,7 +10,11 @@
 static int cmd_help(char** argv, int argc);
 
 static int cmd_log(char** argv, int argc) {
+#ifdef _WIN64
   system("cat build\\game.log");
+#else
+  system("cat build/game.log");
+#endif
   ANSI_CMD(ANSI_RST);
 }
 
@@ -27,7 +31,11 @@ static int cmd_game(char** argv, int argc) {
   si.wShowWindow = SW_SHOW;
   si.dwFlags = STARTF_USESHOWWINDOW;
 
-  CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/game", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
+  CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/nju_universalis", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
+
+#else
+
+  system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40");
 
 #endif
 

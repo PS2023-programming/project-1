@@ -76,7 +76,9 @@ tui_get_ansi_event() {
 
 tui_event *
 tui_get_event() {
+#ifdef _WIN64
   int is_kbd = _kbhit();
+#endif
   char ch = tui_getchar();
   switch (ch)
   {
