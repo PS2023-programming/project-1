@@ -111,7 +111,14 @@ tui_get_event() {
 
 int 
 tui_exec() {
-  // set on top
+
+  Debug("start game mainloop");
+  
+  // There should be a top widget
+  if (!wl_head) {
+    Error("No top widget");
+  }
+  // set top widget as default focus
   focus = wl_head->body;
 
   while (true) {
