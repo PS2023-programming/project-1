@@ -10,7 +10,6 @@
 #include <queue>
 #include <vector>
 #include <algorithm>
-// #include <xcharmouse.h>
 
 #else
 
@@ -22,10 +21,10 @@
 
 #endif
 
-#include <conio.h>
 
 #ifdef _WIN64
 #include <windows.h>
+#include <conio.h>
 #endif
 
 #endif
