@@ -9,7 +9,7 @@ STAGE = test/phase1
 INC_PATH = $(realpath minitui/include) $(realpath $(STAGE)/include)
 INC_FLAG = $(addprefix -I, $(INC_PATH))
 
-COMMON_FLAGS = -O2 -MMD -Wall -Wno-unused-variable -Wno-unused-result -Wno-unused-but-set-variable -Wno-unused-parameter -Wextra $(INC_FLAG)
+COMMON_FLAGS = -O2 -ggdb -MMD -Wall -Wno-unused-variable -Wno-unused-result -Wno-unused-but-set-variable -Wno-unused-parameter -Wextra $(INC_FLAG)
 CFLAGS = $(COMMON_FLAGS)
 CXXFLAGS = $(COMMON_FLAGS)
 
