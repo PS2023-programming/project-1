@@ -57,11 +57,18 @@ static int cmd_game(char** argv, int argc) {
 
 #else
 
-  system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico");
+  system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico 2> /dev/null &");
 
 #endif
   return 0;
 
+}
+
+static int cmd_compile(char **argv, int argc) {
+  if (argc > 1 && strcmp(argv[1], "-c") == 0) {
+    system("make clean");
+  }
+  return system("make compile");
 }
 
 static struct {
@@ -73,6 +80,7 @@ static struct {
   { "game", "Activate the game", cmd_game},
   { "log",  "Display log information", cmd_log},
   { "debug", "Debug the program", cmd_debug},
+  { "compile", "Compile the program, use [-c] to clean before compilation", cmd_compile},
 };
 #define ARRLEN(arr) (int)(sizeof(arr) / sizeof(arr[0]))
 #define CNT_CMD ARRLEN(cmd_table)
