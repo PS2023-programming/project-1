@@ -1,10 +1,15 @@
 #include <debug.h>
 #include <basics.h>
 
+char buf[32768];
+
 void 
 tui_init() {
+  freopen("build/game.log", "w", stderr);
+
   setvbuf(stdin, NULL, _IONBF, 0);
-  // setvbuf(stdout, NULL, _IONBF, 0);
+  setvbuf(stdout, buf, _IOFBF, 32768);
+  setvbuf(stderr, NULL, _IONBF, 0);
 
   #ifdef _WIN64
     Info("We are in windows, enabling virtual terminal input.");

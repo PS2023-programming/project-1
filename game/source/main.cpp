@@ -4,13 +4,7 @@
 #include <mainscr.h>
 
 int main() {
-
-  char buf[32768];
-
-  setvbuf(stdout, buf, _IOFBF, 32768);
-  freopen("build/game.log", "w", stderr);
-  setvbuf(stderr, NULL, _IONBF, 0);
-
+  
   auto mainscr_0 = new mainscr(
     (tui_rect) {
       .start = (tui_point) {0, 0},
