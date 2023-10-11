@@ -32,7 +32,7 @@ int main() {
 
   tui_init();
   ansi_title("NJU Universalis");
-  
+
   int ret_value = tui_exec();
   if (ret_value != 0)
     Warn("tui_exec() returns with a non-zero value %d", ret_value);

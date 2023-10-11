@@ -35,7 +35,7 @@ static int cmd_game(char** argv, int argc) {
 
 #else
 
-  system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40");
+  system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico");
 
 #endif
 
