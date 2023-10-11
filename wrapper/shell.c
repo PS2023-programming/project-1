@@ -22,19 +22,15 @@ static int cmd_game(char** argv, int argc) {
   PROCESS_INFORMATION pi;
   memset(&si, 0, sizeof(si));
   memset(&pi, 0, sizeof(pi));
-  // HANDLE hStdOut = GetStdHandle(STD_OUTPUT_HANDLE);
 
   si.cb = sizeof(si);
   si.wShowWindow = SW_SHOW;
   si.dwFlags = STARTF_USESHOWWINDOW;
 
-  CreateProcess(NULL, "wt --size 150,40 --pos 100,100 build/game", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
-
-  // WaitForSingleObject
-
-
+  CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/game", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
 
 #endif
+
 }
 
 static struct {
@@ -51,6 +47,7 @@ static struct {
 
 void cmd_mainloop() {
   char str[1024];
+  printf("Welcome to the game launcher, use `help` for help.\n");
   while (1) {
     printf(">> ");
     fgets(str, 1024, stdin);
@@ -90,7 +87,6 @@ int main() {
 }
 
 static int cmd_help(char** argv, int argc) {
-
   if (argc == 1) {
     /* no argument given */
     for (int i = 0; i < CNT_CMD; i++) {

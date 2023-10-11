@@ -1,4 +1,3 @@
-
 #include <minitui.h>
 
 tui_event *
@@ -30,5 +29,7 @@ void
 tui_dummy::draw(
   tui_point point
 ) const {
-  
+  ANSI_CMD(ANSI_RST);
+  putchar(' ');
+  ANSI_CMD(ANSI_RST);
 }

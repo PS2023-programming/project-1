@@ -6,6 +6,7 @@
 #define ESC_CODE '\033'
 #define ANSI_ESC "\033"
 #define ANSI_CSI ANSI_ESC "["
+#define ANSI_OSC ANSI_ESC "]"
 
 #define ANSI_RST ANSI_CSI "0m"
 
@@ -17,6 +18,8 @@
 
 #define ANSI_BLUE_NF ANSI_CSI "34m"
 #define ANSI_BLUE ANSI_BLUE_NF
+
+#define ANSI_WHITE_HG ANSI_CSI "107m"
 
 #define ANSI_PACK(...) __VA_ARGS__
 #define ANSI_FMT(original, fmt) fmt original ANSI_RST
@@ -50,5 +53,14 @@ inline static void ansi_cursor_bw(int x) { // CUB
 inline static void ansi_cursor_set(int row, int col) {
   ANSI_CMD(ANSI_CSI "%d;%dH", row, col);
 }
+
+inline static void ansi_title(const char *title) {
+  ANSI_CMD(ANSI_OSC "2;%s\x7", title);
+}
+
+inline static void ansi_icon(const char *icon) {
+  ANSI_CMD(ANSI_OSC "1;%s\x7", icon);
+}
+
 
 #endif

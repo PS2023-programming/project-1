@@ -4,6 +4,15 @@
 
 const char tui_msgbox::hint[] = "[Y]es, (N)o, (C)ancel";
 
+tui_msgbox::tui_msgbox(
+  tui_rect area,
+  tui_widget *parent,
+  char *message
+) : tui_widget(area, parent)
+  , message(message)
+  , msg_length(strlen(message)) {
+}
+
 // @param event triggered event
 // @return event for parents
 tui_event *
@@ -48,7 +57,7 @@ tui_msgbox::draw(
 ) const {
   ANSI_CMD(ANSI_RST);
   if (point.x == area.height() - 1) {
-    if (point.y < sizeof(hint) - 1) {
+    if (point.y < (int) sizeof(hint) - 1) {
       putchar(hint[point.y]);
     } else {
       putchar(' ');
@@ -61,3 +70,4 @@ tui_msgbox::draw(
   }
   ANSI_CMD(ANSI_RST);
 }
+

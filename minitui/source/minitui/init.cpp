@@ -1,7 +1,8 @@
 #include <debug.h>
 #include <basics.h>
 
-void tui_init() {
+void 
+tui_init() {
   setvbuf(stdin, NULL, _IONBF, 0);
   // setvbuf(stdout, NULL, _IONBF, 0);
 
@@ -34,7 +35,9 @@ void tui_init() {
   #endif
 
   // enable paste mode
-  // ANSI_ENABLE(ANSI_PASTE);
+  ANSI_ENABLE(ANSI_PASTE);
+  // hide the cursor
+  ANSI_DISABLE(ANSI_CURSOR);
   
   // ANSI_CMD(ANSI_ENABLE(ANSI_ALTER_BUF));
 }

@@ -19,6 +19,7 @@ extern int log_level;
 
 #define Info(fmt, ...) Log(3, ANSI_BLUE, fmt, ## __VA_ARGS__)
 #define Debug(fmt, ...) Log(2, ANSI_BLUE, fmt, ## __VA_ARGS__)
+#define Trace(fmt, ...) Log(1, ANSI_BLUE, fmt, ## __VA_ARGS__)
 #define Warn(fmt, ...) Log(4, ANSI_BLUE, fmt, ## __VA_ARGS__)
 
 #endif

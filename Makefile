@@ -1,9 +1,12 @@
 WORK_DIR = $(shell pwd)
 BUILD_DIR = $(WORK_DIR)/build
+RESOURCE_DIR = $(WORK_DIR)/resources
 
 $(shell mkdir -p $(BUILD_DIR))
 
-INC_PATH = $(realpath minitui/include) $(realpath game/include)
+STAGE = game
+
+INC_PATH = $(realpath minitui/include) $(realpath $(STAGE)/include)
 INC_FLAG = $(addprefix -I, $(INC_PATH))
 
 COMMON_FLAGS = -O2 -MMD -Wall -Wextra $(INC_FLAG)
@@ -15,8 +18,16 @@ CXX = g++
 AS = as
 LD = ld
 
-SRCS = $(shell find minitui/source -name *.cpp) $(shell find minitui/source -name *.c) $(shell find game/source -name *.c) $(shell find game/source -name *.cpp)
+SRCS = $(shell find minitui/source -name *.cpp) $(shell find minitui/source -name *.c) $(shell find $(STAGE)/source -name *.c) $(shell find $(STAGE)/source -name *.cpp)
 OBJS = $(addprefix $(BUILD_DIR)/, $(addsuffix .o, $(basename $(SRCS))))
+
+
+ifeq ($(shell echo $$OS), Windows_NT)
+
+RESS = $(shell find resources -name *.rc) 
+OBJS += $(addprefix $(BUILD_DIR)/, $(patsubst %.rc, %.o, $(RESS)))
+
+endif
 
 compile: $(BUILD_DIR)/game
 	@echo Compilation finished!
@@ -42,6 +53,15 @@ $(BUILD_DIR)/%.o : %.c
 	@mkdir -p $(dir $@) && echo + $(CC) $<
 	@$(CC) -std=gnu11 -c -o $@ $(CFLAGS) $(realpath $<)
 	@sed -i 's/C:\/msys64//g' $(patsubst %.o, %.d, $@)
+
+
+ifeq ($(shell echo $$OS), Windows_NT)
+
+$(BUILD_DIR)/resources/%.o : resources/%.rc
+	@mkdir -p $(dir $@) && echo + windres $<
+	@windres -i $(realpath $<) -o $@
+
+endif
 
 -include $(addprefix $(BUILD_DIR)/, $(addsuffix .d, $(basename $(SRCS))))
 

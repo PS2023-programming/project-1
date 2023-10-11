@@ -9,6 +9,7 @@
 #include <cstdint>
 #include <queue>
 #include <vector>
+#include <algorithm>
 // #include <xcharmouse.h>
 
 #else

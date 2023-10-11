@@ -37,10 +37,6 @@ struct tui_exit_event {
   void *invoker;
 };
 
-#ifndef __cplusplus
-typedef struct tui_event tui_event;
-typedef struct tui_mouse_event_info tui_mouse_event;
-#endif
-
+int tui_exec();
 
 #endif
