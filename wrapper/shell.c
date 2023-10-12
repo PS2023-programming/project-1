@@ -31,12 +31,16 @@ static int cmd_debug(char** argv, int argc) {
   if (!file) {
     puts("The program seems not to be running...");
   } else {
-    int pid;
-    fscanf(file, "%d", &pid);
-    fclose(file);
-    char cmd[2048];
-    sprintf(cmd, "gdb -p %d", pid);
-    system(cmd);
+    if (argc > 1 && strcmp(argv[1], "-r") == 0) {
+      system("gdb -ex \"target remote localhost:8117\" -ex \"file build/nju_universalis\" -ex \"b main\" -ex \"c\"");
+    } else {
+      int pid;
+      fscanf(file, "%d", &pid);
+      fclose(file);
+      char cmd[2048];
+      sprintf(cmd, "gdb -p %d", pid);
+      system(cmd);
+    }
   }
 }
 
@@ -53,11 +57,17 @@ static int cmd_game(char** argv, int argc) {
   si.wShowWindow = SW_SHOW;
   si.dwFlags = STARTF_USESHOWWINDOW;
 
-  CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/nju_universalis", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
+  if (argc > 1 && strcmp(argv[1], "-g") == 0) {
+    system("wt --size 100,41 --pos 100,100 gdbserver :8117 build/nju_universalis");
+  }
+  else CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/nju_universalis", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
 
 #else
 
-  system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico 2> /dev/null &");
+  if (argc > 1 && strcmp(argv[1], "-g") == 0) {
+    system("konsole -e gdbserver :8117 `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico 2> /dev/null &");
+  }
+  else system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico 2> /dev/null &");
 
 #endif
   return 0;
