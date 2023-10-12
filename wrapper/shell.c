@@ -22,17 +22,21 @@ static int cmd_log(char** argv, int argc) {
 
 static int cmd_debug(char** argv, int argc) {
 
-#ifdef _WIN64
-  FILE *file = fopen("build\\pid.info", "r");
-#else
-  FILE *file = fopen("build/pid.info", "r");
-#endif
-
-  if (!file) {
-    puts("The program seems not to be running...");
+  if (argc > 1 && strcmp(argv[1], "-r") == 0) {
+  #ifdef _WIN64
+    system("gdb -ex \"target remote localhost:8117\" -ex \"file build/nju_universalis\" -ex \"b main\" -ex \"c\"");
+  #else
+    system("gdb -ex \"target remote localhost:8117\" -ex \"b main\" -ex \"c\"");
+  #endif
   } else {
-    if (argc > 1 && strcmp(argv[1], "-r") == 0) {
-      system("gdb -ex \"target remote localhost:8117\" -ex \"file build/nju_universalis\" -ex \"b main\" -ex \"c\"");
+  #ifdef _WIN64
+    FILE *file = fopen("build\\pid.info", "r");
+  #else
+    FILE *file = fopen("build/pid.info", "r");
+  #endif
+
+    if (!file) {
+      puts("The program seems not to be running...");
     } else {
       int pid;
       fscanf(file, "%d", &pid);
@@ -42,6 +46,7 @@ static int cmd_debug(char** argv, int argc) {
       system(cmd);
     }
   }
+
 }
 
 static int cmd_game(char** argv, int argc) {
