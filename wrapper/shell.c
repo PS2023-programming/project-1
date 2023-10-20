@@ -22,17 +22,12 @@ static int cmd_game(char** argv, int argc) {
 
 #ifdef _WIN32
 
-  STARTUPINFO si;
-  PROCESS_INFORMATION pi;
-  memset(&si, 0, sizeof(si));
-  memset(&pi, 0, sizeof(pi));
+  char cmd[1024], pwd[1024];
+  FILE *pwd_f = _popen("cygpath -aw .", "r");
+  fscanf(pwd_f, "%s", pwd);
 
-  si.cb = sizeof(si);
-  si.wShowWindow = SW_SHOW;
-  si.dwFlags = STARTF_USESHOWWINDOW;
-
-  CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/nju_universalis", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
-
+  sprintf(cmd, "wt --size 100,41 --pos 100,100 %s\\build\\nju_universalis", pwd);
+  system(cmd);
 #else
 
   system("konsole -e `pwd`/build/nju_universalis -p TerminalColumns=100 -p TerminalRows=40 -p ICON=`pwd`/resources/dbcq.ico 2> /dev/null &");
