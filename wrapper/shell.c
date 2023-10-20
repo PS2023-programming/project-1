@@ -53,20 +53,18 @@ static int cmd_game(char** argv, int argc) {
 
 #ifdef _WIN32
 
-  STARTUPINFO si;
-  PROCESS_INFORMATION pi;
-  memset(&si, 0, sizeof(si));
-  memset(&pi, 0, sizeof(pi));
-
-  si.cb = sizeof(si);
-  si.wShowWindow = SW_SHOW;
-  si.dwFlags = STARTF_USESHOWWINDOW;
+  char cmd[1024], pwd[1024];
+  FILE *pwd_f = _popen("cygpath -aw .", "r");
+  fscanf(pwd_f, "%s", pwd);
 
   if (argc > 1 && strcmp(argv[1], "-g") == 0) {
-    system("wt --size 100,41 --pos 100,100 gdbserver :8117 build/nju_universalis");
+    sprintf(cmd, "wt --size 100,41 --pos 100,100 gdbserver :8117 %s\\build\\nju_universalis", pwd);
+    system(cmd);
   }
-  else CreateProcess(NULL, "wt --size 100,41 --pos 100,100 build/nju_universalis", NULL, NULL, true, 0, NULL, NULL, &si, &pi);
-
+  else {
+    sprintf(cmd, "wt --size 100,41 --pos 100,100 %s\\build\\nju_universalis", pwd);
+    system(cmd);
+  }
 #else
 
   if (argc > 1 && strcmp(argv[1], "-g") == 0) {
